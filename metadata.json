@@ -1,0 +1,6 @@
+{
+  "name": "DASTAN — Cultural Tourism & Verified Travel",
+  "description": "DASTAN connects travelers with verified local stays, guides, transport, and authentic cultural experiences across Pakistan. Every place has a story.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
