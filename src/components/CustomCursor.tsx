@@ -3,14 +3,13 @@ import { motion } from 'motion/react';
 
 export const CustomCursor: React.FC = () => {
   const [mousePos, setMousePos] = useState({ x: -100, y: -100 });
-  const [isHovered, setIsHovered] = useState(false);
-  const [isPointer, setIsPointer] = useState(false);
+  const [cursorType, setCursorType] = useState<'default' | 'pointer' | 'image'>('default');
+  const [cursorText, setCursorText] = useState('');
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Only enable on non-touch devices
-    const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
-    if (isTouchDevice) return;
+    // Disable on touch devices
+    if (window.matchMedia('(pointer: coarse)').matches) return;
 
     const handleMouseMove = (e: MouseEvent) => {
       setMousePos({ x: e.clientX, y: e.clientY });
@@ -19,11 +18,22 @@ export const CustomCursor: React.FC = () => {
       const target = e.target as HTMLElement | null;
       if (!target) return;
 
-      const isInteractive = target.closest('button, a, input, select, textarea, [role="button"], .interactive-target');
-      setIsPointer(!!isInteractive);
+      const imageEl = target.closest('[data-cursor="explore"], .cursor-explore, .group-image, .destination-media');
+      if (imageEl) {
+        setCursorType('image');
+        setCursorText('EXPLORE');
+        return;
+      }
 
-      const isCardOrImage = target.closest('.group, img, [data-cursor-expand]');
-      setIsHovered(!!isCardOrImage);
+      const isInteractive = target.closest('button, a, input, select, textarea, [role="button"], .cursor-pointer');
+      if (isInteractive) {
+        setCursorType('pointer');
+        setCursorText('');
+        return;
+      }
+
+      setCursorType('default');
+      setCursorText('');
     };
 
     const handleMouseLeave = () => setIsVisible(false);
@@ -44,31 +54,36 @@ export const CustomCursor: React.FC = () => {
 
   return (
     <>
-      {/* Precision inner dot */}
+      {/* Precision Center Dot */}
       <motion.div
-        className="fixed top-0 left-0 pointer-events-none z-[9999] rounded-full bg-[#0F382C] -translate-x-1/2 -translate-y-1/2 hidden md:block"
+        className="fixed top-0 left-0 pointer-events-none z-[99999] rounded-full -translate-x-1/2 -translate-y-1/2 hidden md:block"
         animate={{
           x: mousePos.x,
           y: mousePos.y,
-          scale: isPointer ? 1.4 : 1,
-          backgroundColor: isPointer ? '#E28413' : '#0F382C',
+          scale: cursorType === 'image' ? 0 : cursorType === 'pointer' ? 1.6 : 1,
+          backgroundColor: cursorType === 'pointer' ? '#E28413' : '#0C2B22',
         }}
-        transition={{ type: 'spring', damping: 30, stiffness: 400, mass: 0.1 }}
-        style={{ width: 8, height: 8 }}
+        transition={{ type: 'spring', damping: 35, stiffness: 450, mass: 0.08 }}
+        style={{ width: 6, height: 6 }}
       />
-      {/* Ambient trailing circle */}
+
+      {/* Outer Follower / Context Badge */}
       <motion.div
-        className="fixed top-0 left-0 pointer-events-none z-[9998] rounded-full border border-[#0F382C]/30 -translate-x-1/2 -translate-y-1/2 hidden md:block"
+        className="fixed top-0 left-0 pointer-events-none z-[99998] rounded-full flex items-center justify-center -translate-x-1/2 -translate-y-1/2 hidden md:flex font-mono text-[9px] font-bold tracking-widest"
         animate={{
           x: mousePos.x,
           y: mousePos.y,
-          scale: isPointer ? 1.8 : isHovered ? 2.4 : 1,
-          borderColor: isPointer ? 'rgba(226, 132, 19, 0.45)' : 'rgba(15, 56, 44, 0.35)',
-          backgroundColor: isHovered ? 'rgba(15, 56, 44, 0.04)' : 'transparent',
+          width: cursorType === 'image' ? 72 : cursorType === 'pointer' ? 32 : 24,
+          height: cursorType === 'image' ? 72 : cursorType === 'pointer' ? 32 : 24,
+          borderColor: cursorType === 'image' ? 'rgba(226, 132, 19, 0.9)' : cursorType === 'pointer' ? 'rgba(226, 132, 19, 0.4)' : 'rgba(15, 56, 44, 0.25)',
+          backgroundColor: cursorType === 'image' ? '#0C2B22' : 'transparent',
+          color: '#FEF3C7',
         }}
-        transition={{ type: 'spring', damping: 24, stiffness: 220, mass: 0.2 }}
-        style={{ width: 32, height: 32 }}
-      />
+        transition={{ type: 'spring', damping: 26, stiffness: 260, mass: 0.15 }}
+        style={{ borderWidth: cursorType === 'image' ? 1.5 : 1 }}
+      >
+        {cursorType === 'image' && cursorText}
+      </motion.div>
     </>
   );
 };

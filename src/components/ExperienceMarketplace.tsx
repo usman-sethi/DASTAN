@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { Star, ShieldCheck, Clock, MapPin, Sparkles, ArrowRight } from 'lucide-react';
+import { Clock, MapPin, ArrowRight, ArrowUpRight } from 'lucide-react';
 import { Experience } from '../types';
 import { experiences } from '../data/experiences';
 import { ExperienceModal } from './ExperienceModal';
@@ -18,11 +18,11 @@ export const ExperienceMarketplace: React.FC<ExperienceMarketplaceProps> = ({
   const [selectedExperience, setSelectedExperience] = useState<Experience | null>(null);
 
   const categories = [
-    { id: 'all', label: 'All Experiences' },
+    { id: 'all', label: 'All Masterclasses' },
     { id: 'culinary', label: 'Culinary Masterclasses' },
-    { id: 'nature', label: 'Guided Mountain Walks' },
+    { id: 'nature', label: 'Mountain Naturalist Walks' },
     { id: 'artisan', label: 'Artisan Workshops' },
-    { id: 'community', label: 'Cultural Storytelling' },
+    { id: 'community', label: 'Village Hujras & Storytelling' },
     { id: 'heritage', label: 'Living Heritage' },
   ];
 
@@ -40,42 +40,42 @@ export const ExperienceMarketplace: React.FC<ExperienceMarketplaceProps> = ({
   };
 
   return (
-    <section id="experiences-section" className="py-20 bg-white border-t border-neutral-200">
+    <section id="experiences-section" className="py-24 sm:py-32 bg-white border-t border-neutral-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
-          <div>
-            <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#E28413] mb-2">
-              <Sparkles className="w-4 h-4" />
-              <span>Authentic Cultural Immersion</span>
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+          <div className="max-w-2xl">
+            <div className="flex items-center gap-3 text-xs tracking-[0.2em] uppercase font-bold text-[#E28413] mb-3">
+              <span>03 / THE EXPERIENCES</span>
+              <span aria-hidden="true" className="text-neutral-300">·</span>
+              <span className="text-neutral-500 font-medium">AUTHENTIC CUSTODIAN CRAFT</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-bold font-display text-[#151D1A]">
-              Experience something real.
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black font-display text-[#151D1A] leading-[1.05]">
+              Experience something <br />
+              <span className="font-editorial italic font-normal text-[#B44A2D]">unadorned and real.</span>
             </h2>
-            <p className="text-sm text-neutral-600 mt-2 max-w-xl font-light">
-              No tourist traps. Step directly into family kitchens, clay-tandoor ovens, artisan weaving looms, and evening village Hujras.
+            <p className="text-base text-neutral-600 mt-4 leading-relaxed font-light">
+              No tourist stages. Step directly into family clay-tandoor kitchens, centenarian cedar paths, handloom wool workshops, and evening village Hujras.
             </p>
           </div>
 
-          {/* Verification Trust Pill */}
-          <div className="flex items-center gap-2 text-xs text-[#0F382C] font-semibold bg-[#EBF3EF] px-3.5 py-2 rounded-xl">
-            <ShieldCheck className="w-4 h-4 text-[#0F382C]" />
-            <span>100% of hosts verified in-person by DASTAN</span>
+          <div className="text-xs font-mono text-neutral-500 flex items-center gap-3">
+            <span>100% DIRECT CUSTODIAN COMPENSATION</span>
           </div>
         </div>
 
-        {/* Functional Filter Tabs */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-8">
+        {/* Clean Segmented Controls */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-10 border-b border-neutral-100">
           {categories.map((cat) => {
             const isActive = activeCategory === cat.id;
             return (
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer border ${
+                className={`px-4 py-2 rounded-xl text-xs uppercase tracking-wider font-semibold whitespace-nowrap transition-all cursor-pointer ${
                   isActive
-                    ? 'bg-[#0F382C] text-white border-[#0F382C] shadow-xs'
-                    : 'bg-[#FAF8F5] text-neutral-600 border-neutral-200 hover:border-neutral-300'
+                    ? 'bg-[#0C2B22] text-white shadow-xs'
+                    : 'bg-[#FAF8F5] text-neutral-600 hover:bg-neutral-100'
                 }`}
               >
                 {cat.label}
@@ -85,60 +85,51 @@ export const ExperienceMarketplace: React.FC<ExperienceMarketplaceProps> = ({
         </div>
 
         {/* Experience Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredExperiences.map((exp, idx) => (
-            <motion.div
+            <div
               key={exp.id}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.35, delay: idx * 0.05 }}
               onClick={() => setSelectedExperience(exp)}
-              className="group bg-[#FAF8F5] rounded-2xl overflow-hidden border border-neutral-200 hover:border-[#0F382C]/30 hover:shadow-xl transition-all duration-300 flex flex-col cursor-pointer"
+              data-cursor="explore"
+              className="group bg-[#FAF8F5] rounded-3xl overflow-hidden border border-neutral-200 hover:border-[#0C2B22]/30 hover:shadow-xl transition-all duration-500 flex flex-col cursor-pointer"
             >
-              {/* Image Container */}
-              <div className="relative h-52 w-full overflow-hidden">
+              {/* Media Frame */}
+              <div className="relative h-60 w-full overflow-hidden destination-media">
                 <img
                   src={exp.image}
                   alt={exp.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                  className="w-full h-full object-cover scale-100 group-hover:scale-105 transition-transform duration-700 ease-out"
                   referrerPolicy="no-referrer"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
-                {/* Category & Urdu Script */}
-                <div className="absolute top-3.5 left-3.5 flex items-center gap-2">
-                  <span className="text-[10px] uppercase font-bold tracking-wider bg-white/90 text-[#0F382C] px-2.5 py-1 rounded-md backdrop-blur-xs">
+                {/* Eyebrow & Script */}
+                <div className="absolute top-4 left-4 right-4 flex items-center justify-between text-xs text-white">
+                  <span className="font-mono text-[10px] uppercase tracking-wider bg-black/40 backdrop-blur-md px-2.5 py-1 rounded">
                     {exp.categoryLabel}
                   </span>
-                  <span className="font-nastaliq text-xs text-white/90 bg-black/40 px-2 py-0.5 rounded-md">
+                  <span className="font-nastaliq text-base text-[#FEF3C7]">
                     {exp.urduTitle}
                   </span>
                 </div>
 
-                {/* Rating Badge */}
-                <div className="absolute top-3.5 right-3.5 bg-black/40 text-white px-2 py-1 rounded-md backdrop-blur-xs text-xs font-semibold flex items-center gap-1">
-                  <Star className="w-3 h-3 text-[#E28413] fill-[#E28413]" />
-                  <span className="tabular-nums">{exp.rating}</span>
-                </div>
-
-                {/* Duration & Location Overlay */}
-                <div className="absolute bottom-3 left-3.5 right-3.5 text-white flex items-center justify-between text-xs">
-                  <span className="flex items-center gap-1 text-neutral-300">
+                {/* Bottom Overlay Location */}
+                <div className="absolute bottom-4 left-4 right-4 text-white flex items-center justify-between text-xs font-mono">
+                  <span className="flex items-center gap-1.5 text-neutral-200">
                     <MapPin className="w-3.5 h-3.5 text-[#E28413]" />
                     {exp.destinationName}
                   </span>
-                  <span className="flex items-center gap-1 text-neutral-300">
+                  <span className="flex items-center gap-1.5 text-neutral-200">
                     <Clock className="w-3.5 h-3.5" />
                     {exp.duration}
                   </span>
                 </div>
               </div>
 
-              {/* Card Content */}
-              <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
+              {/* Editorial Card Body */}
+              <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
                 <div className="space-y-2">
-                  <h3 className="text-base font-bold font-display text-neutral-900 group-hover:text-[#0F382C] transition-colors leading-snug">
+                  <h3 className="text-lg font-bold font-display text-neutral-900 group-hover:text-[#0C2B22] transition-colors leading-snug">
                     {exp.title}
                   </h3>
                   <p className="text-xs text-neutral-600 line-clamp-2 leading-relaxed">
@@ -146,20 +137,15 @@ export const ExperienceMarketplace: React.FC<ExperienceMarketplaceProps> = ({
                   </p>
                 </div>
 
-                {/* Host Info Line */}
-                <div className="flex items-center gap-2.5 pt-2 border-t border-neutral-200/80">
+                {/* Host Line */}
+                <div className="flex items-center gap-3 pt-3 border-t border-neutral-200/70">
                   <img
                     src={exp.hostAvatar}
                     alt={exp.hostName}
-                    className="w-7 h-7 rounded-full object-cover border border-[#0F382C]"
+                    className="w-8 h-8 rounded-full object-cover border border-[#0C2B22]"
                   />
                   <div className="text-xs">
-                    <div className="font-semibold text-neutral-800 flex items-center gap-1">
-                      {exp.hostName}
-                      {exp.hostVerified && (
-                        <ShieldCheck className="w-3 h-3 text-[#0F382C]" />
-                      )}
-                    </div>
+                    <div className="font-bold text-neutral-900">{exp.hostName}</div>
                     <div className="text-[11px] text-neutral-400">{exp.hostRole}</div>
                   </div>
                 </div>
@@ -167,25 +153,19 @@ export const ExperienceMarketplace: React.FC<ExperienceMarketplaceProps> = ({
                 {/* Bottom Pricing & Action */}
                 <div className="pt-2 flex items-center justify-between">
                   <div>
-                    <div className="text-[10px] uppercase tracking-wider text-neutral-400">Price</div>
-                    <div className="text-sm font-bold text-[#0F382C] tabular-nums">
-                      PKR {exp.pricePKR.toLocaleString()} <span className="text-[11px] font-normal text-neutral-500">/ person</span>
+                    <div className="text-[10px] uppercase font-mono tracking-wider text-neutral-400">Price</div>
+                    <div className="text-sm font-bold text-[#0C2B22] tabular-nums">
+                      PKR {exp.pricePKR.toLocaleString()} <span className="text-[11px] font-normal text-neutral-500">/ guest</span>
                     </div>
                   </div>
 
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleBookExperience(exp);
-                    }}
-                    className="px-3.5 py-1.5 bg-[#0F382C] hover:bg-[#164E3D] text-white text-xs font-semibold rounded-lg shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer"
-                  >
-                    <span>Book Experience</span>
-                    <ArrowRight className="w-3 h-3 text-[#E28413]" />
-                  </button>
+                  <span className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-[#E28413] group-hover:text-[#0C2B22] transition-colors">
+                    <span>Reserve</span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  </span>
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

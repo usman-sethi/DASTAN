@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Volume2, BookOpen, CheckCircle, RotateCw, Sparkles, HelpCircle, Layers, Check } from 'lucide-react';
+import { Volume2, Check, RotateCw, Sparkles } from 'lucide-react';
 import { LanguagePhrase } from '../types';
 import { languagePhrases } from '../data/phrases';
 import { speakPhrase } from '../lib/speech';
@@ -12,7 +12,7 @@ export const LanguageLearning: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const [learnedPhraseIds, setLearnedPhraseIds] = useState<string[]>([
     'phrase-1', 'phrase-2', 'phrase-3', 'phrase-5', 'phrase-7', 'phrase-9', 'phrase-10'
-  ]); // 7 preloaded to match "7 / 20 phrases learned" from brief!
+  ]); // 7 preloaded from brief
 
   const [mode, setMode] = useState<'phrasebook' | 'flashcards'>('phrasebook');
   const [currentFlashcardIndex, setCurrentFlashcardIndex] = useState(0);
@@ -22,10 +22,10 @@ export const LanguageLearning: React.FC = () => {
   const categories = [
     { id: 'all', label: 'All Phrases' },
     { id: 'greetings', label: 'Greetings' },
-    { id: 'hospitality', label: 'Respect & Hospitality' },
+    { id: 'hospitality', label: 'Hospitality & Respect' },
     { id: 'food', label: 'Food & Tea' },
-    { id: 'transport', label: 'Transport & Directions' },
-    { id: 'shopping', label: 'Shopping & Bazaars' },
+    { id: 'transport', label: 'Transit & Directions' },
+    { id: 'shopping', label: 'Bazaars & Crafts' },
     { id: 'emergency', label: 'Emergency Support' },
   ];
 
@@ -36,8 +36,8 @@ export const LanguageLearning: React.FC = () => {
   const handlePlayAudio = (phrase: LanguagePhrase) => {
     setPlayingPhraseId(phrase.id);
     speakPhrase(phrase.phraseLocal, phrase.language);
-    showToast('Playing Pronunciation', `Audio for "${phrase.phraseLocal}"`, 'info');
-    setTimeout(() => setPlayingPhraseId(null), 1200);
+    showToast('Playing Pronunciation', phrase.phraseLocal, 'info');
+    setTimeout(() => setPlayingPhraseId(null), 1400);
   };
 
   const toggleLearned = (id: string) => {
@@ -45,7 +45,7 @@ export const LanguageLearning: React.FC = () => {
       setLearnedPhraseIds(prev => prev.filter(item => item !== id));
     } else {
       setLearnedPhraseIds(prev => [...prev, id]);
-      showToast('Phrase Marked as Learned! 🎉', 'Your progress has updated.', 'success');
+      showToast('Phrase Marked as Learned', 'Dialect progress updated.', 'success');
     }
   };
 
@@ -61,77 +61,73 @@ export const LanguageLearning: React.FC = () => {
   const progressPercent = Math.round((learnedCount / totalCount) * 100);
 
   return (
-    <section id="learn-section" className="py-20 bg-white border-t border-neutral-200">
+    <section id="learn-section" className="py-24 sm:py-32 bg-white border-t border-neutral-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
-          <div>
-            <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#E28413] mb-2">
-              <BookOpen className="w-4 h-4" />
-              <span>DASTAN Cultural Differentiator</span>
+        {/* Act IV Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+          <div className="max-w-2xl">
+            <div className="flex items-center gap-3 text-xs tracking-[0.2em] uppercase font-bold text-[#E28413] mb-3">
+              <span>04 / THE CULTURE & DIALECT</span>
+              <span aria-hidden="true" className="text-neutral-300">·</span>
+              <span className="text-neutral-500 font-medium">PASHTO & KHOWAR IMMERSION</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-bold font-display text-[#151D1A]">
-              Learn before you go.
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black font-display text-[#151D1A] leading-[1.05]">
+              Learn the place <br />
+              <span className="font-editorial italic font-normal text-[#144D3C]">before you arrive.</span>
             </h2>
-            <p className="text-sm text-neutral-600 mt-2 max-w-xl font-light">
-              Speaking even three words of Pashto or Khowar changes you from an outsider to an honored guest. Master authentic phrases with pronunciation audio and cultural etiquette.
+            <p className="text-base text-neutral-600 mt-4 leading-relaxed font-light">
+              Speaking even a few words of Pashto or Khowar transforms you from a visitor into an honored guest. Master authentic phrases with acoustic cadence and cultural context.
             </p>
           </div>
 
-          {/* Progress Tracker Widget */}
-          <div className="bg-[#FAF8F5] p-4 rounded-2xl border border-neutral-200 min-w-[280px]">
-            <div className="flex items-center justify-between text-xs font-bold text-neutral-800 mb-1.5">
-              <span>Your Language Journey</span>
-              <span className="text-[#0F382C] tabular-nums">{learnedCount} / {totalCount} phrases learned</span>
+          {/* Minimalist Progress Meter */}
+          <div className="bg-[#FAF8F5] p-5 rounded-2xl border border-neutral-200 min-w-[280px]">
+            <div className="flex items-center justify-between text-xs font-mono font-semibold text-neutral-600 mb-2">
+              <span className="uppercase tracking-wider">Progress</span>
+              <span className="tabular-nums font-bold text-[#0C2B22]">{learnedCount} / {totalCount} Phrases</span>
             </div>
-            {/* Progress bar */}
-            <div className="w-full bg-neutral-200 h-2.5 rounded-full overflow-hidden">
-              <motion.div
-                className="bg-[#0F382C] h-full rounded-full"
-                initial={{ width: 0 }}
-                animate={{ width: `${progressPercent}%` }}
-                transition={{ duration: 0.8 }}
+            <div className="w-full bg-neutral-200 h-1.5 rounded-full overflow-hidden">
+              <div
+                className="bg-[#0C2B22] h-full rounded-full transition-all duration-700"
+                style={{ width: `${progressPercent}%` }}
               />
             </div>
-            <div className="flex items-center justify-between text-[11px] text-neutral-500 mt-2">
-              <span>Level: Respectful Guest</span>
-              <span className="font-semibold text-[#E28413]">{progressPercent}% Completed</span>
+            <div className="flex items-center justify-between text-[11px] text-neutral-400 mt-2 font-mono">
+              <span>RESPECTFUL GUEST</span>
+              <span>{progressPercent}%</span>
             </div>
           </div>
         </div>
 
-        {/* View Switcher: Interactive Phrasebook vs Flashcard Trainer */}
-        <div className="flex items-center justify-between flex-wrap gap-4 mb-8">
-          <div className="flex items-center gap-1.5 p-1 bg-neutral-100 rounded-xl">
+        {/* View Switcher & Category Filter */}
+        <div className="flex items-center justify-between flex-wrap gap-4 mb-10 pb-6 border-b border-neutral-100">
+          <div className="flex items-center gap-1 p-1 bg-neutral-100 rounded-xl">
             <button
               onClick={() => setMode('phrasebook')}
-              className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
+              className={`px-4 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer ${
                 mode === 'phrasebook'
-                  ? 'bg-white text-[#0F382C] shadow-xs'
-                  : 'text-neutral-600 hover:text-neutral-900'
+                  ? 'bg-white text-[#0C2B22] shadow-xs'
+                  : 'text-neutral-500 hover:text-neutral-800'
               }`}
             >
-              <Layers className="w-3.5 h-3.5" />
-              <span>Interactive Phrasebook</span>
+              Phrasebook View
             </button>
-
             <button
               onClick={() => {
                 setMode('flashcards');
                 setIsFlipped(false);
               }}
-              className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
+              className={`px-4 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer ${
                 mode === 'flashcards'
-                  ? 'bg-white text-[#0F382C] shadow-xs'
-                  : 'text-neutral-600 hover:text-neutral-900'
+                  ? 'bg-white text-[#0C2B22] shadow-xs'
+                  : 'text-neutral-500 hover:text-neutral-800'
               }`}
             >
-              <HelpCircle className="w-3.5 h-3.5" />
-              <span>Interactive Flashcards</span>
+              Flashcard Trainer
             </button>
           </div>
 
-          {/* Category Tabs */}
+          {/* Filter Categories */}
           <div className="flex items-center gap-1.5 overflow-x-auto pb-1 max-w-full">
             {categories.map((cat) => (
               <button
@@ -143,7 +139,7 @@ export const LanguageLearning: React.FC = () => {
                 }}
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap cursor-pointer transition-colors ${
                   activeCategory === cat.id
-                    ? 'bg-[#0F382C] text-white'
+                    ? 'bg-[#0C2B22] text-white font-semibold'
                     : 'bg-[#FAF8F5] text-neutral-600 hover:bg-neutral-100'
                 }`}
               >
@@ -153,9 +149,9 @@ export const LanguageLearning: React.FC = () => {
           </div>
         </div>
 
-        {/* MODE 1: Interactive Phrasebook Grid */}
+        {/* Mode 1: Editorial Phrasebook Grid */}
         {mode === 'phrasebook' && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredPhrases.map((phrase) => {
               const isLearned = learnedPhraseIds.includes(phrase.id);
               const isPlaying = playingPhraseId === phrase.id;
@@ -163,34 +159,32 @@ export const LanguageLearning: React.FC = () => {
               return (
                 <div
                   key={phrase.id}
-                  className={`p-5 rounded-2xl border transition-all duration-200 flex flex-col justify-between space-y-4 ${
+                  className={`p-6 rounded-2xl border transition-all duration-300 flex flex-col justify-between space-y-5 ${
                     isLearned
-                      ? 'bg-[#FAF8F5] border-[#0F382C]/30'
-                      : 'bg-white border-neutral-200 hover:border-neutral-300'
+                      ? 'bg-[#FAF8F5] border-[#0C2B22]/25'
+                      : 'bg-white border-neutral-200 hover:border-neutral-300 hover:shadow-md'
                   }`}
                 >
-                  <div className="space-y-3">
-                    {/* Top Language Badge & Audio Trigger */}
+                  <div className="space-y-4">
+                    {/* Top Row: Language & Audio Trigger */}
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-[#0F382C] bg-[#EBF3EF] px-2 py-0.5 rounded">
-                          {phrase.language} · {phrase.categoryLabel}
-                        </span>
-                      </div>
+                      <span className="text-[10px] font-mono uppercase tracking-widest text-[#0C2B22] bg-[#EBF3EF] px-2.5 py-1 rounded">
+                        {phrase.language.toUpperCase()} · {phrase.categoryLabel.toUpperCase()}
+                      </span>
 
                       <div className="flex items-center gap-2">
-                        {/* Audio Speak Button */}
+                        {/* Audio Trigger with sound visualizer */}
                         <button
                           onClick={() => handlePlayAudio(phrase)}
-                          className={`p-2 rounded-xl transition-all cursor-pointer flex items-center gap-1.5 ${
+                          className={`p-2 rounded-xl transition-all cursor-pointer flex items-center gap-1.5 text-xs font-semibold ${
                             isPlaying
-                              ? 'bg-[#E28413] text-white scale-105'
-                              : 'bg-[#FAF8F5] hover:bg-[#EBF3EF] text-[#0F382C] border border-neutral-200'
+                              ? 'bg-[#E28413] text-white scale-105 shadow-sm'
+                              : 'bg-[#FAF8F5] hover:bg-[#EBF3EF] text-[#0C2B22] border border-neutral-200'
                           }`}
-                          title="Listen to authentic pronunciation"
+                          aria-label={`Listen to pronunciation of ${phrase.phraseLocal}`}
                         >
-                          <Volume2 className="w-4 h-4" />
-                          <span className="text-[11px] font-semibold">Listen</span>
+                          <Volume2 className={`w-3.5 h-3.5 ${isPlaying ? 'animate-pulse' : ''}`} />
+                          <span className="text-[11px] font-mono">LISTEN</span>
                         </button>
 
                         {/* Learned toggle */}
@@ -198,45 +192,44 @@ export const LanguageLearning: React.FC = () => {
                           onClick={() => toggleLearned(phrase.id)}
                           className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
                             isLearned
-                              ? 'text-emerald-700 bg-emerald-100'
+                              ? 'text-emerald-800 bg-emerald-100'
                               : 'text-neutral-300 hover:text-neutral-600'
                           }`}
-                          title={isLearned ? 'Learned' : 'Mark as learned'}
+                          title={isLearned ? 'Marked as learned' : 'Mark as learned'}
                         >
-                          <CheckCircle className="w-5 h-5" />
+                          <Check className="w-4 h-4" />
                         </button>
                       </div>
                     </div>
 
-                    {/* Local Phrase & Urdu Calligraphy */}
+                    {/* Editorial Phrase Typography */}
                     <div>
-                      <div className="text-xl font-bold font-display text-neutral-900">
+                      <h3 className="text-xl sm:text-2xl font-bold font-display text-neutral-900 tracking-tight">
                         {phrase.phraseLocal}
-                      </div>
-                      <div className="text-lg font-nastaliq text-[#0F382C] mt-1 font-semibold leading-relaxed">
+                      </h3>
+                      <div className="text-xl font-nastaliq text-[#0C2B22] mt-1 font-semibold leading-relaxed">
                         {phrase.phraseScript}
                       </div>
                     </div>
 
-                    {/* Pronunciation & English Meaning */}
-                    <div className="space-y-1.5 pt-1 text-xs">
-                      <div className="text-neutral-500">
-                        <strong className="text-neutral-700 font-semibold">Pronounce:</strong>{' '}
-                        <span className="italic font-mono text-neutral-800">{phrase.pronunciation}</span>
+                    {/* Phonetic Pronunciation & Meaning */}
+                    <div className="space-y-1.5 text-xs border-t border-neutral-100 pt-3">
+                      <div className="text-neutral-500 font-mono text-[11px]">
+                        Pronounce: <span className="text-neutral-900 italic font-sans font-medium">{phrase.pronunciation}</span>
                       </div>
-                      <div className="text-neutral-800">
-                        <strong className="text-neutral-700 font-semibold">English:</strong>{' '}
-                        <span className="font-medium text-[#0F382C]">{phrase.englishMeaning}</span>
+                      <div className="text-sm font-editorial italic text-neutral-800">
+                        "{phrase.englishMeaning}"
                       </div>
-                      <div className="text-neutral-600 font-nastaliq text-sm">
-                        <strong>اردو:</strong> {phrase.urduMeaning}
+                      <div className="text-xs font-nastaliq text-neutral-600">
+                        {phrase.urduMeaning}
                       </div>
                     </div>
                   </div>
 
-                  {/* Cultural Tip Footer */}
-                  <div className="p-3 bg-[#FEF3C7]/40 rounded-xl border border-[#FDE68A]/60 text-[11px] text-[#78350F] leading-snug">
-                    <span className="font-bold">Etiquette Tip:</span> {phrase.culturalTip}
+                  {/* Cultural Context Wisdom Note */}
+                  <div className="p-3.5 bg-[#FAF8F5] rounded-xl border border-neutral-150 text-[11px] text-neutral-600 leading-snug">
+                    <strong className="text-neutral-900 font-semibold block mb-0.5">Cultural Etiquette:</strong>
+                    {phrase.culturalTip}
                   </div>
                 </div>
               );
@@ -244,59 +237,56 @@ export const LanguageLearning: React.FC = () => {
           </div>
         )}
 
-        {/* MODE 2: Interactive Flashcard Quiz Trainer */}
+        {/* Mode 2: Flashcard Quiz Trainer */}
         {mode === 'flashcards' && currentFlashcard && (
-          <div className="max-w-xl mx-auto py-6">
-            <div className="text-center mb-4">
-              <span className="text-xs font-semibold text-neutral-500">
-                Card {currentFlashcardIndex + 1} of {filteredPhrases.length}
-              </span>
+          <div className="max-w-xl mx-auto py-8">
+            <div className="text-center font-mono text-xs text-neutral-400 mb-4">
+              CARD {currentFlashcardIndex + 1} OF {filteredPhrases.length}
             </div>
 
-            {/* Flashcard container with flip animation */}
             <motion.div
               onClick={() => setIsFlipped(!isFlipped)}
-              className="bg-[#FAF8F5] rounded-3xl p-8 sm:p-12 border-2 border-neutral-200/80 shadow-lg min-h-[340px] flex flex-col justify-between text-center cursor-pointer transition-all hover:border-[#0F382C]/50 relative"
+              className="bg-[#FAF8F5] rounded-3xl p-8 sm:p-12 border-2 border-neutral-200/90 shadow-xl min-h-[360px] flex flex-col justify-between text-center cursor-pointer transition-all hover:border-[#0C2B22]/50 relative"
             >
-              <div className="flex items-center justify-between text-xs text-neutral-400">
-                <span className="bg-[#EBF3EF] text-[#0F382C] px-2.5 py-1 rounded-md font-bold uppercase tracking-wider">
+              <div className="flex items-center justify-between text-xs font-mono text-neutral-400">
+                <span className="bg-[#EBF3EF] text-[#0C2B22] px-2.5 py-1 rounded font-bold uppercase tracking-wider text-[10px]">
                   {currentFlashcard.language} · {currentFlashcard.categoryLabel}
                 </span>
-                <span className="flex items-center gap-1 text-neutral-500">
+                <span className="flex items-center gap-1.5 text-neutral-500">
                   <RotateCw className="w-3.5 h-3.5" />
-                  Click to Flip
+                  <span>Click to Flip</span>
                 </span>
               </div>
 
               {!isFlipped ? (
-                // Front Side: How do I say X?
+                // Front Side
                 <div className="my-auto space-y-4">
-                  <div className="text-xs font-bold uppercase tracking-wider text-[#E28413]">
-                    How do you say in {currentFlashcard.language}:
+                  <div className="text-xs font-mono font-bold uppercase tracking-widest text-[#E28413]">
+                    HOW DO YOU SAY IN {currentFlashcard.language.toUpperCase()}:
                   </div>
-                  <h3 className="text-2xl sm:text-3xl font-bold font-display text-neutral-900">
+                  <h3 className="text-3xl sm:text-4xl font-editorial italic font-normal text-neutral-900">
                     "{currentFlashcard.englishMeaning}"
                   </h3>
                   <div className="text-sm font-nastaliq text-neutral-600">
                     {currentFlashcard.urduMeaning}
                   </div>
-                  <div className="text-xs text-neutral-400 pt-4">
-                    Tap anywhere to reveal answer & pronunciation
+                  <div className="text-xs font-mono text-neutral-400 pt-4">
+                    Tap to reveal pronunciation & script
                   </div>
                 </div>
               ) : (
-                // Back Side: Revealed local phrase
+                // Back Side
                 <div className="my-auto space-y-4 animate-in fade-in zoom-in-95 duration-200">
-                  <div className="text-xs font-bold uppercase tracking-wider text-emerald-700">
-                    Answer:
+                  <div className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-800">
+                    PHONETIC ANSWER:
                   </div>
-                  <h3 className="text-3xl font-bold font-display text-[#0F382C]">
+                  <h3 className="text-3xl sm:text-4xl font-bold font-display text-[#0C2B22]">
                     {currentFlashcard.phraseLocal}
                   </h3>
-                  <div className="text-2xl font-nastaliq text-[#E28413] font-semibold">
+                  <div className="text-3xl font-nastaliq text-[#E28413] font-semibold">
                     {currentFlashcard.phraseScript}
                   </div>
-                  <div className="text-sm font-mono text-neutral-700">
+                  <div className="text-xs font-mono text-neutral-600">
                     Phonetic: <strong>{currentFlashcard.pronunciation}</strong>
                   </div>
                   <button
@@ -304,29 +294,29 @@ export const LanguageLearning: React.FC = () => {
                       e.stopPropagation();
                       handlePlayAudio(currentFlashcard);
                     }}
-                    className="mx-auto px-4 py-2 bg-[#0F382C] text-white rounded-xl text-xs font-semibold flex items-center gap-2 cursor-pointer shadow-xs"
+                    className="mx-auto px-5 py-2.5 bg-[#0C2B22] text-white rounded-xl text-xs font-mono font-bold flex items-center gap-2 cursor-pointer shadow-sm hover:bg-[#144D3C]"
                   >
                     <Volume2 className="w-4 h-4 text-[#E28413]" />
-                    <span>Play Pronunciation Audio</span>
+                    <span>PLAY PRONUNCIATION</span>
                   </button>
                 </div>
               )}
 
-              {/* Bottom Card Controls */}
-              <div className="flex items-center justify-between pt-6 border-t border-neutral-200">
+              {/* Bottom Controls */}
+              <div className="flex items-center justify-between pt-6 border-t border-neutral-200 text-xs">
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
                     toggleLearned(currentFlashcard.id);
                   }}
-                  className={`text-xs font-semibold flex items-center gap-1.5 px-3 py-1.5 rounded-lg cursor-pointer ${
+                  className={`font-semibold flex items-center gap-1.5 px-3 py-1.5 rounded-lg cursor-pointer ${
                     learnedPhraseIds.includes(currentFlashcard.id)
-                      ? 'bg-emerald-100 text-emerald-800'
-                      : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
+                      ? 'bg-emerald-100 text-emerald-900'
+                      : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200'
                   }`}
                 >
                   <Check className="w-3.5 h-3.5" />
-                  <span>{learnedPhraseIds.includes(currentFlashcard.id) ? 'Learned ✓' : 'Mark as Learned'}</span>
+                  <span>{learnedPhraseIds.includes(currentFlashcard.id) ? 'Learned ✓' : 'Mark Learned'}</span>
                 </button>
 
                 <button
@@ -334,7 +324,7 @@ export const LanguageLearning: React.FC = () => {
                     e.stopPropagation();
                     handleNextFlashcard();
                   }}
-                  className="px-4 py-2 bg-[#0F382C] hover:bg-[#164E3D] text-white rounded-xl text-xs font-semibold cursor-pointer shadow-xs"
+                  className="px-5 py-2 bg-[#0C2B22] hover:bg-[#144D3C] text-white rounded-xl font-bold uppercase tracking-wider text-xs cursor-pointer shadow-xs"
                 >
                   Next Phrase →
                 </button>

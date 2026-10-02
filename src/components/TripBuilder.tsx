@@ -96,30 +96,31 @@ export const TripBuilder: React.FC<TripBuilderProps> = ({
   };
 
   return (
-    <section id="trip-builder-section" className="py-20 bg-[#FAF8F5] border-t border-neutral-200">
+    <section id="trip-builder-section" className="py-24 sm:py-32 bg-[#FAF8F5] border-t border-neutral-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="mb-10 max-w-3xl">
-          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#E28413] mb-2">
-            <Compass className="w-4 h-4" />
-            <span>Interactive Trip Studio</span>
+        <div className="mb-14 max-w-3xl">
+          <div className="flex items-center gap-3 text-xs tracking-[0.2em] uppercase font-bold text-[#E28413] mb-3">
+            <span>05 / THE ITINERARY</span>
+            <span aria-hidden="true" className="text-neutral-300">·</span>
+            <span className="text-neutral-500 font-medium">TRIP STUDIO ARCHITECTURE</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-bold font-display text-[#151D1A]">
-            Build your personalized story
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black font-display text-[#151D1A] leading-[1.05]">
+            Build your personalized <br />
+            <span className="font-editorial italic font-normal text-[#144D3C]">Pakistani story.</span>
           </h2>
-          <p className="text-sm text-neutral-600 mt-2 font-light">
-            Every choice adapts your journey in real time. We match you with verified local homestays, licensed high-altitude drivers, and generational storytellers.
+          <p className="text-base text-neutral-600 mt-4 leading-relaxed font-light">
+            Every choice adapts your journey deterministically in real time. We match you with inspected local homestays, licensed high-altitude drivers, and generational storytellers.
           </p>
         </div>
 
         {/* Builder Interactive Control Console */}
-        <div className="bg-white rounded-2xl p-6 sm:p-8 border border-neutral-200 shadow-sm mb-12">
+        <div className="bg-white rounded-3xl p-6 sm:p-10 border border-neutral-200 shadow-sm mb-12">
           <div className="space-y-8">
             {/* Step 1: Destination Selection */}
             <div>
-              <label className="text-xs font-bold uppercase tracking-wider text-neutral-500 mb-3 flex items-center gap-2">
-                <span className="w-5 h-5 rounded-full bg-[#0F382C] text-white flex items-center justify-center text-[10px]">1</span>
-                Where are you going?
+              <label className="text-xs font-mono font-bold uppercase tracking-wider text-neutral-400 mb-3 flex items-center gap-2">
+                <span>01 // WHERE ARE YOU TRAVELING?</span>
               </label>
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
                 {destinations.map((dest) => {

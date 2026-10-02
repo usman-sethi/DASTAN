@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { Star, ShieldCheck, ArrowRight, Compass, Sparkles } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Compass, ShieldCheck, Star } from 'lucide-react';
 import { Destination } from '../types';
 import { destinations } from '../data/destinations';
 import { DestinationModal } from './DestinationModal';
@@ -19,148 +19,183 @@ export const DestinationExplorer: React.FC<DestinationExplorerProps> = ({
   const [activeModalDest, setActiveModalDest] = useState<Destination | null>(null);
 
   return (
-    <section id="explore-section" className="py-20 bg-[#FAF8F5]">
+    <section id="explore-section" className="py-24 sm:py-32 bg-[#FAF8F5]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
-          <div>
-            <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#E28413] mb-2">
-              <Compass className="w-4 h-4" />
-              <span>Destinations & Living Heritage</span>
+        {/* Act II Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+          <div className="max-w-2xl">
+            <div className="flex items-center gap-3 text-xs tracking-[0.2em] uppercase font-bold text-[#E28413] mb-3">
+              <span>02 / THE PLACES</span>
+              <span aria-hidden="true" className="text-neutral-300">·</span>
+              <span className="text-neutral-500 font-medium">LIVING HERITAGE & TOPOLOGY</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-bold font-display text-[#151D1A]">
-              Where will your story take you?
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black font-display text-[#151D1A] leading-[1.05]">
+              Where will your story <br />
+              <span className="font-editorial italic font-normal text-[#B44A2D]">take you?</span>
             </h2>
-            <p className="text-sm text-neutral-600 mt-2 max-w-xl font-light">
-              From the emerald rivers of Swat and ancient cedar forests of Kalam, to the sacred valleys of Chitral. Every destination is vetted with generational local hosts.
+            <p className="text-base text-neutral-600 mt-4 leading-relaxed font-light">
+              From the emerald waters of Swat and virgin cedar forests of Kalam, to the high passes of Chitral. Every destination is vetted with generational local hosts.
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row sm:items-center gap-3 text-xs text-neutral-500">
-            <div className="flex items-center gap-2">
-              <span className="inline-block w-2 h-2 rounded-full bg-emerald-500" />
-              <span>5 Active Mountain Corridors</span>
-            </div>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4 text-xs font-mono text-neutral-500">
+            <div>5 ACTIVE HIGH MOUNTAIN CORRIDORS</div>
             <button
               onClick={() => {
                 const el = document.getElementById('map-section');
                 if (el) el.scrollIntoView({ behavior: 'smooth' });
               }}
-              className="px-3 py-1.5 bg-[#EBF3EF] hover:bg-[#DCEAE3] text-[#0F382C] font-semibold rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer self-start sm:self-auto"
+              className="px-4 py-2 bg-[#EBF3EF] hover:bg-[#DCEAE3] text-[#0C2B22] font-semibold text-xs rounded-xl transition-colors flex items-center gap-1.5 cursor-pointer self-start sm:self-auto"
             >
-              <Compass className="w-3.5 h-3.5 text-[#E28413]" />
-              <span>Interactive Map View</span>
+              <span>Explore Topographic Map</span>
+              <ArrowRight className="w-3.5 h-3.5 text-[#E28413]" />
             </button>
           </div>
         </div>
 
-        {/* Destination Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {destinations.map((dest, index) => {
-            const isFeatured = index === 0; // Swat is marquee
+        {/* Editorial Asymmetrical Layout: 60/40 Featured Marquee + Clean Offset Cards */}
+        <div className="space-y-8">
+          {/* Card 01: SWAT (Massive 60/40 Split Editorial Hero Card) */}
+          {(() => {
+            const dest = destinations[0]; // Swat
             return (
-              <motion.div
-                key={dest.id}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.08 }}
+              <div
                 onClick={() => setActiveModalDest(dest)}
                 onMouseEnter={() => onHoverDestination?.(dest.id)}
                 onMouseLeave={() => onHoverDestination?.(null)}
-                className={`group relative bg-white rounded-2xl overflow-hidden border border-neutral-200/90 shadow-xs hover:shadow-xl hover:border-[#0F382C]/30 transition-all duration-300 flex flex-col cursor-pointer ${
-                  isFeatured ? 'md:col-span-2 lg:col-span-2' : ''
-                }`}
+                data-cursor="explore"
+                className="group relative bg-[#0C2B22] text-white rounded-3xl overflow-hidden shadow-xl cursor-pointer grid grid-cols-1 lg:grid-cols-12 min-h-[460px] border border-neutral-800 transition-all duration-500 hover:shadow-2xl"
               >
-                {/* Image Container */}
-                <div className={`relative overflow-hidden ${isFeatured ? 'h-72 sm:h-80' : 'h-60'}`}>
+                {/* Visual Half (7 cols) with zoom and dark vignette */}
+                <div className="lg:col-span-7 relative h-72 sm:h-96 lg:h-full overflow-hidden destination-media">
                   <img
                     src={dest.heroImage}
                     alt={dest.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                    className="w-full h-full object-cover scale-100 group-hover:scale-105 transition-transform duration-700 ease-out"
                     referrerPolicy="no-referrer"
                   />
-                  {/* Subtle Gradient Scrim */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-black/80 lg:from-transparent via-transparent to-black/30" />
+                </div>
 
-                  {/* Top Nastaliq Badge */}
-                  <div className="absolute top-4 left-4 flex items-center gap-2">
-                    <span className="font-nastaliq text-base text-white/95 bg-black/30 px-2.5 py-0.5 rounded-lg backdrop-blur-xs font-semibold">
-                      {dest.urduName}
-                    </span>
-                    {isFeatured && (
-                      <span className="text-[11px] font-semibold tracking-wider uppercase bg-[#E28413] text-white px-2.5 py-0.5 rounded-lg flex items-center gap-1 shadow-xs">
-                        <Sparkles className="w-3 h-3" />
-                        Featured Story
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Rating & Verified Indicator inside photo */}
-                  <div className="absolute top-4 right-4 flex items-center gap-1 bg-black/40 text-white px-2.5 py-1 rounded-lg backdrop-blur-xs text-xs font-semibold">
-                    <Star className="w-3.5 h-3.5 text-[#E28413] fill-[#E28413]" />
-                    <span className="tabular-nums">{dest.rating}</span>
-                  </div>
-
-                  {/* Bottom Image Overlay Details */}
-                  <div className="absolute bottom-4 left-4 right-4 text-white">
-                    <div className="text-xs text-neutral-300 font-medium">
-                      {dest.region}, {dest.province}
+                {/* Editorial Content Half (5 cols) */}
+                <div className="lg:col-span-5 p-8 sm:p-12 flex flex-col justify-between space-y-6 relative z-10 bg-[#0C2B22]">
+                  <div>
+                    <div className="flex items-center justify-between text-xs tracking-widest font-mono text-[#FEF3C7] mb-4">
+                      <span>01 / KHYBER PAKHTUNKHWA</span>
+                      <span className="font-nastaliq text-base text-[#E28413]">{dest.urduName}</span>
                     </div>
-                    <h3 className="text-2xl font-bold font-display text-white">
-                      {dest.name}
+
+                    <h3 className="text-4xl sm:text-5xl font-black font-display tracking-tight text-white mb-3">
+                      SWAT
                     </h3>
-                    <p className="text-xs text-neutral-200 mt-0.5 italic">
+
+                    <p className="text-sm sm:text-base font-editorial italic text-neutral-300 mb-4">
                       "{dest.tagline}"
                     </p>
-                  </div>
-                </div>
 
-                {/* Card Content & Metadata */}
-                <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
-                  <p className="text-xs text-neutral-600 line-clamp-2 leading-relaxed">
-                    {dest.description}
-                  </p>
-
-                  {/* Highlights Bullet Tags */}
-                  <div className="flex flex-wrap gap-1.5">
-                    {dest.highlights.slice(0, 3).map((item, idx) => (
-                      <span
-                        key={idx}
-                        className="text-[11px] text-neutral-700 bg-neutral-100 px-2 py-0.5 rounded font-normal"
-                      >
-                        {item.split(' ')[0]} {item.split(' ')[1]}
-                      </span>
-                    ))}
-                    {dest.highlights.length > 3 && (
-                      <span className="text-[11px] text-neutral-400 self-center">
-                        +{dest.highlights.length - 3} more
-                      </span>
-                    )}
+                    <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed font-light line-clamp-3">
+                      {dest.description}
+                    </p>
                   </div>
 
-                  {/* Card Bottom Bar: Starting price + Verified Count + Action */}
-                  <div className="pt-3 border-t border-neutral-100 flex items-center justify-between gap-2">
-                    <div>
-                      <div className="text-[10px] uppercase tracking-wider text-neutral-400">
-                        {dest.verifiedProvidersCount} Verified Hosts
-                      </div>
-                      <div className="text-xs font-bold text-[#0F382C] tabular-nums">
-                        PKR {dest.startingPricePKR.toLocaleString()} <span className="font-normal text-neutral-500 text-[11px]">/ 3 days</span>
-                      </div>
+                  {/* Clean unboxed metadata */}
+                  <div className="pt-6 border-t border-white/10 space-y-4">
+                    <div className="flex items-center gap-4 text-xs font-mono text-neutral-300">
+                      <span>{dest.verifiedProvidersCount} VERIFIED HOSTS</span>
+                      <span aria-hidden="true">·</span>
+                      <span>{dest.altitude}</span>
+                      <span aria-hidden="true">·</span>
+                      <span>★ {dest.rating}</span>
                     </div>
 
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs font-semibold text-[#0F382C] group-hover:text-[#E28413] transition-colors flex items-center gap-1">
-                        Explore Story
-                        <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                    <div className="flex items-center justify-between pt-2">
+                      <div>
+                        <div className="text-[10px] uppercase tracking-wider text-neutral-400 font-mono">From</div>
+                        <div className="text-sm font-bold text-[#FEF3C7] tabular-nums">
+                          PKR {dest.startingPricePKR.toLocaleString()} <span className="text-[11px] font-normal text-neutral-400">/ 3-day story</span>
+                        </div>
+                      </div>
+
+                      <span className="inline-flex items-center gap-2 text-xs uppercase tracking-wider font-bold text-[#E28413] group-hover:text-white transition-colors">
+                        <span>Explore Story</span>
+                        <ArrowUpRight className="w-4 h-4" />
                       </span>
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             );
-          })}
+          })()}
+
+          {/* Cards 02, 03, 04, 05: Asymmetrical 2-Column Offset Editorial Pairs */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {destinations.slice(1).map((dest, idx) => {
+              const itemNumber = `0${idx + 2}`;
+              return (
+                <div
+                  key={dest.id}
+                  onClick={() => setActiveModalDest(dest)}
+                  onMouseEnter={() => onHoverDestination?.(dest.id)}
+                  onMouseLeave={() => onHoverDestination?.(null)}
+                  data-cursor="explore"
+                  className="group bg-white rounded-3xl overflow-hidden border border-neutral-200/90 shadow-xs hover:shadow-xl hover:border-[#0C2B22]/30 transition-all duration-500 flex flex-col cursor-pointer"
+                >
+                  {/* Image Frame with crop & zoom */}
+                  <div className="relative h-64 sm:h-72 w-full overflow-hidden destination-media">
+                    <img
+                      src={dest.heroImage}
+                      alt={dest.name}
+                      className="w-full h-full object-cover scale-100 group-hover:scale-105 transition-transform duration-700 ease-out"
+                      referrerPolicy="no-referrer"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
+
+                    {/* Top Floating Eyebrow */}
+                    <div className="absolute top-5 left-5 right-5 flex items-center justify-between text-xs text-white">
+                      <span className="font-mono text-[11px] tracking-wider bg-black/40 backdrop-blur-md px-2.5 py-1 rounded-md">
+                        {itemNumber} / {dest.region.toUpperCase()}
+                      </span>
+                      <span className="font-nastaliq text-base text-[#FEF3C7]">
+                        {dest.urduName}
+                      </span>
+                    </div>
+
+                    {/* Bottom Image Headline */}
+                    <div className="absolute bottom-5 left-5 right-5 text-white">
+                      <h3 className="text-3xl font-black font-display tracking-tight">
+                        {dest.name}
+                      </h3>
+                      <p className="text-xs font-editorial italic text-neutral-200 mt-0.5">
+                        "{dest.tagline}"
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Card Editorial Footer */}
+                  <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
+                    <p className="text-xs text-neutral-600 line-clamp-2 leading-relaxed">
+                      {dest.description}
+                    </p>
+
+                    {/* Clean unboxed metadata with typographic dots */}
+                    <div className="pt-4 border-t border-neutral-100 flex items-center justify-between text-xs">
+                      <div className="flex items-center gap-3 text-neutral-500 font-mono text-[11px]">
+                        <span>{dest.altitude}</span>
+                        <span aria-hidden="true">·</span>
+                        <span>{dest.verifiedProvidersCount} HOSTS</span>
+                      </div>
+
+                      <div className="text-right">
+                        <span className="text-xs font-bold text-[#0C2B22] tabular-nums">
+                          PKR {dest.startingPricePKR.toLocaleString()}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
 

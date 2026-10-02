@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ToastProvider, useToast } from './components/Toast';
 import { CustomCursor } from './components/CustomCursor';
+import { CinematicLoader } from './components/CinematicLoader';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { DestinationExplorer } from './components/DestinationExplorer';
@@ -132,6 +133,7 @@ function MainAppContent() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#FAF8F5] text-[#151D1A]">
+      <CinematicLoader />
       <CustomCursor />
 
       {/* Top Bar Navigation */}

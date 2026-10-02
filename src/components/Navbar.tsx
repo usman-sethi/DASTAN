@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Search, Compass, Menu, X, Briefcase, Sparkles } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Search, Compass, Menu, X, ArrowUpRight } from 'lucide-react';
 
 interface NavbarProps {
   activeTab: string;
@@ -16,14 +16,24 @@ export const Navbar: React.FC<NavbarProps> = ({
   savedTripsCount,
   onOpenAdmin
 }) => {
+  const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 45);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const navLinks = [
-    { id: 'explore', label: 'Explore' },
-    { id: 'trips', label: 'Trips' },
+    { id: 'explore', label: 'Destinations' },
+    { id: 'map', label: 'Topography' },
+    { id: 'trips', label: 'Trip Studio' },
     { id: 'experiences', label: 'Experiences' },
-    { id: 'learn', label: 'Learn' },
-    { id: 'safety', label: 'Travel Advisory' },
+    { id: 'learn', label: 'Language' },
+    { id: 'safety', label: 'Safety' },
     { id: 'hosts', label: 'For Hosts' },
   ];
 
@@ -33,167 +43,155 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-[#FAF8F5]/90 backdrop-blur-md border-b border-neutral-200/80 transition-all">
-      {/* Subtle Demo Banner */}
-      <div className="bg-[#0F382C] text-neutral-100 text-xs px-4 py-1.5 flex items-center justify-between font-medium">
-        <div className="flex items-center gap-2 max-w-7xl mx-auto w-full">
-          <span className="inline-block w-2 h-2 rounded-full bg-[#E28413] animate-pulse" />
-          <span className="truncate">
-            <strong className="text-[#FEF3C7] font-semibold">DEMO MODE:</strong> Pakistan Cultural Tourism Prototype — Verified Places, People & Language
-          </span>
-          <div className="ml-auto hidden sm:flex items-center gap-4 text-[11px] text-neutral-300">
-            <button 
-              onClick={onOpenAdmin}
-              className="hover:text-white underline underline-offset-2 transition-colors cursor-pointer"
+    <>
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          isScrolled
+            ? 'bg-[#0C2B22]/95 backdrop-blur-md border-b border-white/10 shadow-lg py-2.5 text-white'
+            : 'bg-transparent py-4 text-white'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+          {/* Zone 1: Single text element wordmark */}
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => handleNavClick('explore')}
+              className="group flex items-baseline gap-2 text-left cursor-pointer focus-visible:outline-none"
             >
-              Demo Metrics & Model
-            </button>
-            <span>KP Tourism Focus</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Top Bar: Strict 3-zone contract */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        {/* Zone 1: Brand Wordmark (Single text element with subtle Nastaliq story mark) */}
-        <div className="flex items-center gap-2.5">
-          <button
-            onClick={() => handleNavClick('explore')}
-            className="group flex items-baseline gap-2 text-left cursor-pointer focus-visible:outline-none"
-          >
-            <span className="text-2xl font-bold font-display tracking-tight text-[#0F382C] group-hover:text-[#164E3D] transition-colors">
-              DASTAN
-            </span>
-            <span className="text-sm font-nastaliq text-[#E28413] font-semibold">
-              داستان
-            </span>
-          </button>
-        </div>
-
-        {/* Zone 2: 4–6 Clean Nav Links */}
-        <nav className="hidden md:flex items-center gap-6 lg:gap-8">
-          {navLinks.map((link) => {
-            const isActive = activeTab === link.id;
-            return (
-              <button
-                key={link.id}
-                onClick={() => handleNavClick(link.id)}
-                className={`text-sm font-medium transition-colors relative py-1 cursor-pointer whitespace-nowrap ${
-                  isActive ? 'text-[#0F382C] font-semibold' : 'text-neutral-600 hover:text-[#0F382C]'
-                }`}
-              >
-                {link.label}
-                {isActive && (
-                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#0F382C] rounded-full" />
-                )}
-              </button>
-            );
-          })}
-        </nav>
-
-        {/* Zone 3: 1–2 Primary Actions */}
-        <div className="flex items-center gap-2 sm:gap-3">
-          {/* Global Search Button */}
-          <button
-            onClick={onOpenSearch}
-            className="p-2 text-neutral-600 hover:text-[#0F382C] hover:bg-neutral-100 rounded-lg transition-colors cursor-pointer flex items-center gap-1.5"
-            aria-label="Search destinations, experiences, and verified guides"
-          >
-            <Search className="w-4 h-4" />
-            <span className="hidden lg:inline text-xs font-medium text-neutral-500">Search</span>
-          </button>
-
-          {/* My Trips Dashboard indicator */}
-          <button
-            onClick={() => handleNavClick('my-trips')}
-            className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors cursor-pointer whitespace-nowrap ${
-              activeTab === 'my-trips'
-                ? 'bg-[#0F382C] text-white'
-                : 'bg-[#EBF3EF] text-[#0F382C] hover:bg-[#DCEAE3]'
-            }`}
-          >
-            <Briefcase className="w-3.5 h-3.5" />
-            <span>My Trips</span>
-            {savedTripsCount > 0 && (
-              <span className="bg-[#E28413] text-white text-[10px] px-1.5 py-0.2 rounded-full font-bold">
-                {savedTripsCount}
+              <span className="text-xl sm:text-2xl font-black font-display tracking-tight text-white group-hover:text-[#FEF3C7] transition-colors">
+                DASTAN
               </span>
-            )}
-          </button>
+              <span className="text-xs sm:text-sm font-nastaliq text-[#E28413] font-semibold">
+                داستان
+              </span>
+            </button>
+          </div>
 
-          {/* Start Journey CTA */}
-          <button
-            onClick={() => handleNavClick('planner')}
-            className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-[#0F382C] hover:bg-[#164E3D] text-white rounded-lg text-xs font-semibold shadow-xs transition-colors cursor-pointer whitespace-nowrap"
-          >
-            <Compass className="w-3.5 h-3.5 text-[#E28413]" />
-            <span>Plan Journey</span>
-          </button>
+          {/* Zone 2: 4-6 Clean editorial text nav links */}
+          <nav className="hidden md:flex items-center gap-7 lg:gap-8">
+            {navLinks.map((link) => {
+              const isActive = activeTab === link.id;
+              return (
+                <button
+                  key={link.id}
+                  onClick={() => handleNavClick(link.id)}
+                  className={`text-xs uppercase tracking-wider font-semibold transition-all relative py-1 cursor-pointer whitespace-nowrap ${
+                    isActive
+                      ? 'text-[#FEF3C7]'
+                      : 'text-neutral-300 hover:text-white'
+                  }`}
+                >
+                  {link.label}
+                  {isActive && (
+                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#E28413] rounded-full" />
+                  )}
+                </button>
+              );
+            })}
+          </nav>
 
-          {/* Mobile hamburger button */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-neutral-700 hover:text-[#0F382C] rounded-lg transition-colors"
-            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
-          >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
-        </div>
-      </div>
+          {/* Zone 3: 1-2 Primary actions */}
+          <div className="flex items-center gap-2.5 sm:gap-3">
+            {/* Global Search Button */}
+            <button
+              onClick={onOpenSearch}
+              className="p-2 text-neutral-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors cursor-pointer flex items-center gap-1.5"
+              aria-label="Search destinations, experiences, and verified guides"
+            >
+              <Search className="w-4 h-4" />
+              <span className="hidden lg:inline text-xs font-medium text-neutral-300">Search</span>
+            </button>
 
-      {/* Mobile Drawer */}
-      {mobileMenuOpen && (
-        <div className="md:hidden border-t border-neutral-200 bg-[#FAF8F5] px-4 pt-3 pb-5 space-y-2 shadow-xl animate-in slide-in-from-top duration-200">
-          <div className="flex flex-col gap-1">
-            {navLinks.map((link) => (
-              <button
-                key={link.id}
-                onClick={() => handleNavClick(link.id)}
-                className={`text-left px-3 py-2.5 rounded-lg text-sm font-medium ${
-                  activeTab === link.id
-                    ? 'bg-[#EBF3EF] text-[#0F382C] font-semibold'
-                    : 'text-neutral-700 hover:bg-neutral-100'
-                }`}
-              >
-                {link.label}
-              </button>
-            ))}
+            {/* My Trips Dashboard indicator */}
             <button
               onClick={() => handleNavClick('my-trips')}
-              className="text-left px-3 py-2.5 rounded-lg text-sm font-medium text-neutral-700 hover:bg-neutral-100 flex items-center justify-between"
+              className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold tracking-wide transition-all cursor-pointer whitespace-nowrap border ${
+                activeTab === 'my-trips'
+                  ? 'bg-[#E28413] text-white border-[#E28413]'
+                  : 'bg-white/10 border-white/15 text-white hover:bg-white/20'
+              }`}
             >
-              <span className="flex items-center gap-2">
-                <Briefcase className="w-4 h-4 text-[#0F382C]" />
-                My Saved Trips
-              </span>
+              <span>My Trips</span>
               {savedTripsCount > 0 && (
-                <span className="bg-[#E28413] text-white text-xs px-2 py-0.5 rounded-full font-bold">
+                <span className="bg-[#0C2B22] text-[#FEF3C7] text-[10px] px-1.5 py-0.2 rounded font-mono font-bold">
                   {savedTripsCount}
                 </span>
               )}
             </button>
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onOpenAdmin();
-              }}
-              className="text-left px-3 py-2.5 rounded-lg text-sm font-medium text-[#E28413] hover:bg-[#FEF3C7]/40 flex items-center gap-2"
-            >
-              <Sparkles className="w-4 h-4" />
-              Demo Business Model & Metrics
-            </button>
-          </div>
-          <div className="pt-2 border-t border-neutral-200">
+
+            {/* Plan Journey Primary CTA */}
             <button
               onClick={() => handleNavClick('planner')}
-              className="w-full flex items-center justify-center gap-2 py-2.5 bg-[#0F382C] text-white rounded-lg text-sm font-semibold shadow-xs"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-[#E28413] hover:bg-[#d07409] text-white rounded-lg text-xs font-bold transition-all cursor-pointer whitespace-nowrap shadow-xs"
             >
-              <Compass className="w-4 h-4 text-[#E28413]" />
-              Start Your Journey
+              <span>Plan Journey</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </button>
+
+            {/* Mobile menu hamburger */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden p-2 text-white hover:bg-white/10 rounded-lg transition-colors"
+              aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>
-      )}
-    </header>
+
+        {/* Mobile Navigation Drawer */}
+        {mobileMenuOpen && (
+          <div className="md:hidden border-t border-white/10 bg-[#0C2B22]/98 backdrop-blur-xl px-5 pt-4 pb-6 space-y-3 shadow-2xl animate-in slide-in-from-top duration-200">
+            <div className="flex flex-col gap-1.5">
+              {navLinks.map((link) => (
+                <button
+                  key={link.id}
+                  onClick={() => handleNavClick(link.id)}
+                  className={`text-left px-3 py-2.5 rounded-lg text-xs uppercase tracking-wider font-semibold ${
+                    activeTab === link.id
+                      ? 'bg-white/15 text-[#FEF3C7]'
+                      : 'text-neutral-300 hover:bg-white/10'
+                  }`}
+                >
+                  {link.label}
+                </button>
+              ))}
+
+              <button
+                onClick={() => handleNavClick('my-trips')}
+                className="text-left px-3 py-2.5 rounded-lg text-xs uppercase tracking-wider font-semibold text-neutral-300 hover:bg-white/10 flex items-center justify-between"
+              >
+                <span>My Saved Trips</span>
+                {savedTripsCount > 0 && (
+                  <span className="bg-[#E28413] text-white text-[10px] px-2 py-0.5 rounded-full font-bold">
+                    {savedTripsCount}
+                  </span>
+                )}
+              </button>
+
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onOpenAdmin();
+                }}
+                className="text-left px-3 py-2.5 rounded-lg text-xs uppercase tracking-wider font-semibold text-[#E28413] hover:bg-white/10"
+              >
+                Prototype Metrics & Model
+              </button>
+            </div>
+
+            <div className="pt-2 border-t border-white/10">
+              <button
+                onClick={() => handleNavClick('planner')}
+                className="w-full flex items-center justify-center gap-2 py-2.5 bg-[#E28413] text-white rounded-lg text-xs font-bold shadow-xs uppercase tracking-wider"
+              >
+                <span>Start Your Journey</span>
+                <ArrowUpRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        )}
+      </header>
+    </>
   );
 };
