@@ -95,6 +95,8 @@ export const ProviderVerification: React.FC = () => {
                   <img
                     src={prov.avatarUrl}
                     alt={prov.name}
+                    loading="lazy"
+                    decoding="async"
                     className="w-12 h-12 rounded-xl object-cover border border-white/20 shrink-0"
                   />
                   <div className="flex-1 min-w-0">
@@ -123,6 +125,8 @@ export const ProviderVerification: React.FC = () => {
                 <img
                   src={selectedProvider.avatarUrl}
                   alt={selectedProvider.name}
+                  loading="lazy"
+                  decoding="async"
                   className="w-20 h-20 rounded-2xl object-cover border-2 border-[#0C2B22] shadow-sm shrink-0"
                 />
                 <div>

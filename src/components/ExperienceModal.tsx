@@ -27,10 +27,15 @@ export const ExperienceModal: React.FC<ExperienceModalProps> = ({
           className="relative bg-white rounded-2xl w-full max-w-3xl overflow-hidden shadow-2xl border border-neutral-200 flex flex-col"
         >
           {/* Header Image */}
-          <div className="relative h-60 sm:h-72 w-full overflow-hidden">
+          <div className="relative h-60 sm:h-72 w-full overflow-hidden bg-[#0C2B22]">
             <img
               src={experience.image}
+              srcSet={experience.imageSrcSet}
+              sizes={experience.imageSizes || '(max-width: 768px) 100vw, 768px'}
               alt={experience.title}
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
               className="w-full h-full object-cover"
               referrerPolicy="no-referrer"
             />
@@ -74,6 +79,8 @@ export const ExperienceModal: React.FC<ExperienceModalProps> = ({
                 <img
                   src={experience.hostAvatar}
                   alt={experience.hostName}
+                  loading="lazy"
+                  decoding="async"
                   className="w-12 h-12 rounded-full object-cover border-2 border-[#0F382C]"
                 />
                 <div>

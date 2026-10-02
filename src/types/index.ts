@@ -9,6 +9,8 @@ export interface Destination {
   province: string;
   description: string;
   heroImage: string;
+  heroImageSrcSet?: string;
+  heroImageSizes?: string;
   rating: number;
   reviewsCount: number;
   verifiedProvidersCount: number;
@@ -97,6 +99,8 @@ export interface Experience {
   whatIsIncluded: string[];
   maxGroupSize: number;
   image: string;
+  imageSrcSet?: string;
+  imageSizes?: string;
   culturalInsight: string;
 }
 

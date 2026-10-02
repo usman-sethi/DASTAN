@@ -97,10 +97,11 @@ DASTAN embeds structured entity graphs validated against Google Search Central g
 
 ## 6. Image SEO & Core Web Vitals Optimization
 
-1. **Next-Gen WebP Format:** All destination and hero photography has been encoded in high-fidelity `.webp` located in `/public/images/`, reducing payload sizes by ~65% while guaranteeing 100% availability on static hosting (Vercel, CDN) without 404 bundle misses.
+1. **Next-Gen WebP Format & Responsive Srcset:** All destination and hero photography is encoded in multi-resolution WebP (`480w`, `800w`, `1200w`, and `1376w`) located in `/public/images/`. Responsive `srcset` descriptors and tailored `sizes` attributes ensure mobile devices fetch ultra-light ~30-45KB assets instead of full desktop resolutions.
 2. **Semantic Alt Text:** Every image contains descriptive, un-stuffed natural alt text describing geography, culture, and architecture (e.g., *"Swat Valley Hindu Kush emerald river terraces in Khyber Pakhtunkhwa, Pakistan"*).
-3. **Largest Contentful Paint (LCP):**
-   - The hero image is prioritized and rendered with high priority.
+3. **Largest Contentful Paint (LCP) & Critical Hero Optimization:**
+   - Critical hero images (Hero banner, Destination Modal, Experience Modal) are configured with `loading="eager"` and `fetchpriority="high"`.
+   - Critical LCP hero image is preloaded in `<head>` via `<link rel="preload" as="image" href="..." fetchpriority="high" imagesrcset="..." imagesizes="100vw">` for sub-second mobile First Contentful Paint and Largest Contentful Paint.
    - Contrast scrims are implemented via pure CSS gradients rather than multiple DOM layers.
 4. **Cumulative Layout Shift (CLS):**
    - Explicit aspect-ratio containers (`aspect-[4/3]`, `h-64 sm:h-72`) prevent reflows as images load.

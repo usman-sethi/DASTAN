@@ -36,10 +36,15 @@ export const DestinationModal: React.FC<DestinationModalProps> = ({
           className="relative bg-[#FAF8F5] rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden shadow-2xl border border-neutral-200 flex flex-col"
         >
           {/* Header Image with Scrim */}
-          <div className="relative h-64 sm:h-72 w-full overflow-hidden shrink-0">
+          <div className="relative h-64 sm:h-72 w-full overflow-hidden shrink-0 bg-[#0C2B22]">
             <img
               src={destination.heroImage}
+              srcSet={destination.heroImageSrcSet}
+              sizes={destination.heroImageSizes || '(max-width: 768px) 100vw, 896px'}
               alt={destination.name}
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
               className="w-full h-full object-cover"
               referrerPolicy="no-referrer"
             />

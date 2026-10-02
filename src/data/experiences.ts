@@ -27,6 +27,8 @@ export const experiences: Experience[] = [
     ],
     maxGroupSize: 8,
     image: '/images/hero_swat_valley.webp',
+    imageSrcSet: '/images/hero_swat_valley-480w.webp 480w, /images/hero_swat_valley-800w.webp 800w, /images/hero_swat_valley-1200w.webp 1200w',
+    imageSizes: '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px',
     culturalInsight: 'In Pashtun tradition, food cooked with love for a guest carries the barakah (blessing) of the entire household.'
   },
   {
@@ -55,6 +57,8 @@ export const experiences: Experience[] = [
     ],
     maxGroupSize: 10,
     image: '/images/dest_kalam_mountains.webp',
+    imageSrcSet: '/images/dest_kalam_mountains-480w.webp 480w, /images/dest_kalam_mountains-800w.webp 800w, /images/dest_kalam_mountains.webp 1200w',
+    imageSizes: '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px',
     culturalInsight: 'Local Kohistani communities treat the ancient deodar cedar ("Diyar") as a sacred guardian of mountain watersheds.'
   },
   {
@@ -83,6 +87,8 @@ export const experiences: Experience[] = [
     ],
     maxGroupSize: 12,
     image: '/images/hero_swat_valley.webp',
+    imageSrcSet: '/images/hero_swat_valley-480w.webp 480w, /images/hero_swat_valley-800w.webp 800w, /images/hero_swat_valley-1200w.webp 1200w',
+    imageSizes: '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px',
     culturalInsight: 'A guest in a Pashtun Hujra is under the sacred protection of the host family from sunset to sunrise.'
   },
   {
@@ -111,6 +117,8 @@ export const experiences: Experience[] = [
     ],
     maxGroupSize: 6,
     image: '/images/dest_chitral_culture.webp',
+    imageSrcSet: '/images/dest_chitral_culture-480w.webp 480w, /images/dest_chitral_culture-800w.webp 800w, /images/dest_chitral_culture-1200w.webp 1200w',
+    imageSizes: '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px',
     culturalInsight: 'Patti cloth has protected mountain herders and royalty for over 800 years and is completely natural and non-synthetic.'
   },
   {
@@ -139,6 +147,8 @@ export const experiences: Experience[] = [
     ],
     maxGroupSize: 10,
     image: '/images/hero_swat_valley.webp',
+    imageSrcSet: '/images/hero_swat_valley-480w.webp 480w, /images/hero_swat_valley-800w.webp 800w, /images/hero_swat_valley-1200w.webp 1200w',
+    imageSizes: '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px',
     culturalInsight: 'Miandam’s community orchards share irrigation water using ancient stone markers based on shadow lengths.'
   },
   {
@@ -167,6 +177,8 @@ export const experiences: Experience[] = [
     ],
     maxGroupSize: 10,
     image: '/images/dest_hunza_passu.webp',
+    imageSrcSet: '/images/dest_hunza_passu-480w.webp 480w, /images/dest_hunza_passu-800w.webp 800w, /images/dest_hunza_passu-1200w.webp 1200w',
+    imageSizes: '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px',
     culturalInsight: 'Hunza has achieved over 95% literacy and pioneered women-led carpentry in mountain societies.'
   }
 ];

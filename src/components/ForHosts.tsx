@@ -149,6 +149,8 @@ export const ForHosts: React.FC = () => {
               <img
                 src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&auto=format&fit=crop&q=80"
                 alt="Ahmad Khan"
+                loading="lazy"
+                decoding="async"
                 className="w-14 h-14 rounded-2xl object-cover border-2 border-[#0F382C]"
               />
               <div>

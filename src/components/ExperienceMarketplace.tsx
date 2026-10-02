@@ -94,10 +94,14 @@ export const ExperienceMarketplace: React.FC<ExperienceMarketplaceProps> = ({
               className="group bg-[#FAF8F5] rounded-3xl overflow-hidden border border-neutral-200 hover:border-[#0C2B22]/30 hover:shadow-xl transition-all duration-500 flex flex-col cursor-pointer"
             >
               {/* Media Frame */}
-              <div className="relative h-60 w-full overflow-hidden destination-media">
+              <div className="relative h-60 w-full overflow-hidden destination-media bg-[#0C2B22]/10">
                 <img
                   src={exp.image}
+                  srcSet={exp.imageSrcSet}
+                  sizes={exp.imageSizes || '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px'}
                   alt={exp.title}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover scale-100 group-hover:scale-105 transition-transform duration-700 ease-out"
                   referrerPolicy="no-referrer"
                 />
@@ -142,6 +146,8 @@ export const ExperienceMarketplace: React.FC<ExperienceMarketplaceProps> = ({
                   <img
                     src={exp.hostAvatar}
                     alt={exp.hostName}
+                    loading="lazy"
+                    decoding="async"
                     className="w-8 h-8 rounded-full object-cover border border-[#0C2B22]"
                   />
                   <div className="text-xs">

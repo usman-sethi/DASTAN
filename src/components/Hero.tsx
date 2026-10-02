@@ -17,6 +17,7 @@ export const Hero: React.FC<HeroProps> = ({ onStartJourney, onExploreDestination
   const [selectedSeason, setSelectedSeason] = useState('spring-summer');
   const [selectedBudget, setSelectedBudget] = useState<'budget' | 'comfort' | 'luxury'>('comfort');
   const [selectedStyle, setSelectedStyle] = useState<'solo' | 'couple' | 'family' | 'friends'>('family');
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   const handlePlanSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,14 +31,20 @@ export const Hero: React.FC<HeroProps> = ({ onStartJourney, onExploreDestination
   return (
     <section className="relative min-h-screen flex flex-col justify-between bg-[#0C2B22] text-white overflow-hidden pt-28 pb-12 sm:pb-16">
       {/* Full Viewport Cinematic Background with slow Ken Burns effect */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
+      <div className="absolute inset-0 z-0 overflow-hidden bg-[#071B15]">
         <motion.img
           src="/images/hero_swat_valley.webp"
+          srcSet="/images/hero_swat_valley-480w.webp 480w, /images/hero_swat_valley-800w.webp 800w, /images/hero_swat_valley-1200w.webp 1200w, /images/hero_swat_valley.webp 1376w"
+          sizes="100vw"
           alt="Swat Valley Hindu Kush emerald river terraces, Khyber Pakhtunkhwa"
-          className="w-full h-full object-cover object-center scale-105"
+          className={`w-full h-full object-cover object-center scale-105 transition-opacity duration-700 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
           initial={{ scale: 1.08 }}
           animate={{ scale: 1.02 }}
           transition={{ duration: 18, repeat: Infinity, repeatType: 'reverse', ease: 'easeInOut' }}
+          loading="eager"
+          decoding="async"
+          fetchPriority="high"
+          onLoad={() => setImageLoaded(true)}
           referrerPolicy="no-referrer"
         />
         {/* Cinematic gradient scrims ensuring WCAG AA legibility and moody depth */}

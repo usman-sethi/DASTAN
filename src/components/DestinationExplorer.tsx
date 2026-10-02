@@ -67,10 +67,14 @@ export const DestinationExplorer: React.FC<DestinationExplorerProps> = ({
                 className="group relative bg-[#0C2B22] text-white rounded-3xl overflow-hidden shadow-xl cursor-pointer grid grid-cols-1 lg:grid-cols-12 min-h-[460px] border border-neutral-800 transition-all duration-500 hover:shadow-2xl"
               >
                 {/* Visual Half (7 cols) with zoom and dark vignette */}
-                <div className="lg:col-span-7 relative h-72 sm:h-96 lg:h-full overflow-hidden destination-media">
+                <div className="lg:col-span-7 relative h-72 sm:h-96 lg:h-full overflow-hidden destination-media bg-[#0C2B22]">
                   <img
                     src={dest.heroImage}
+                    srcSet={dest.heroImageSrcSet}
+                    sizes={dest.heroImageSizes || '(max-width: 1024px) 100vw, 58vw'}
                     alt={dest.name}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover scale-100 group-hover:scale-105 transition-transform duration-700 ease-out"
                     referrerPolicy="no-referrer"
                   />
@@ -141,10 +145,14 @@ export const DestinationExplorer: React.FC<DestinationExplorerProps> = ({
                   className="group bg-white rounded-3xl overflow-hidden border border-neutral-200/90 shadow-xs hover:shadow-xl hover:border-[#0C2B22]/30 transition-all duration-500 flex flex-col cursor-pointer"
                 >
                   {/* Image Frame with crop & zoom */}
-                  <div className="relative h-64 sm:h-72 w-full overflow-hidden destination-media">
+                  <div className="relative h-64 sm:h-72 w-full overflow-hidden destination-media bg-[#0C2B22]/10">
                     <img
                       src={dest.heroImage}
+                      srcSet={dest.heroImageSrcSet}
+                      sizes={dest.heroImageSizes || '(max-width: 768px) 100vw, 50vw'}
                       alt={dest.name}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover scale-100 group-hover:scale-105 transition-transform duration-700 ease-out"
                       referrerPolicy="no-referrer"
                     />
