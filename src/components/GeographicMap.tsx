@@ -49,7 +49,7 @@ const CLUSTERS: ClusterNode[] = [
     prominentPeaks: ['Tirich Mir (7,708m)', 'Noshaq (7,492m)'],
     description: 'Western frontier valley shadowed by Tirich Mir. Home to the indigenous polytheistic Kalash communities in Bumburet and Rumbur.',
     accentColor: '#B94726',
-    thumbnail: '/src/assets/images/dest_chitral_culture_1790930771028.jpg'
+    thumbnail: '/images/dest_chitral_culture.webp'
   },
   {
     id: 'kalam',
@@ -66,7 +66,7 @@ const CLUSTERS: ClusterNode[] = [
     prominentPeaks: ['Falak Sar (5,918m)', 'Mankial Peak (5,598m)'],
     description: 'Alpine deodar sanctuary where glacial streams form the Swat River. Gateway to Mahodand and Saifullah alpine lakes.',
     accentColor: '#164E3D',
-    thumbnail: '/src/assets/images/dest_kalam_mountains_1790930758794.jpg'
+    thumbnail: '/images/dest_kalam_mountains.webp'
   },
   {
     id: 'swat',
@@ -83,7 +83,7 @@ const CLUSTERS: ClusterNode[] = [
     prominentPeaks: ['Malam Jabba Ridge (2,804m)', 'Elum Peak (2,800m)'],
     description: 'Ancient Gandhara kingdom of Uddiyana with Buddhist stupas, emerald riverbanks, and terraced peach orchards.',
     accentColor: '#0F382C',
-    thumbnail: '/src/assets/images/hero_swat_valley_1790930745484.jpg'
+    thumbnail: '/images/hero_swat_valley.webp'
   },
   {
     id: 'hunza',
@@ -101,7 +101,7 @@ const CLUSTERS: ClusterNode[] = [
     prominentPeaks: ['Rakaposhi (7,788m)', 'Passu Cones (6,106m)', 'Ultar Sar (7,388m)'],
     description: 'Legendary Silk Road mountain kingdom famous for thousand-year-old stone forts, high literacy, and turquoise Attabad Lake.',
     accentColor: '#E28413',
-    thumbnail: '/src/assets/images/dest_hunza_passu_1790930782780.jpg'
+    thumbnail: '/images/dest_hunza_passu.webp'
   },
   {
     id: 'skardu',
@@ -119,7 +119,7 @@ const CLUSTERS: ClusterNode[] = [
     prominentPeaks: ['K2 (8,611m - 2nd highest)', 'Broad Peak (8,051m)', 'Masherbrum (7,821m)'],
     description: 'High-altitude cold desert, ancient Kharpocho fortress, and Deosai (Land of Giants) — world’s 2nd highest alpine plateau.',
     accentColor: '#D97706',
-    thumbnail: '/src/assets/images/hero_swat_valley_1790930745484.jpg'
+    thumbnail: '/images/dest_skardu_karakoram.webp'
   }
 ];
 

@@ -1,0 +1,22 @@
+# DASTAN (داستان) — Robots.txt
+# Sitemaps and crawling rules for public travel guides and cultural experiences
+
+User-agent: *
+Allow: /
+Allow: /destinations
+Allow: /destinations/*
+Allow: /experiences
+Allow: /experiences/*
+Allow: /learn
+Allow: /safety
+Allow: /hosts
+
+# Disallow private user flows, simulated checkout, and internal demo admin
+Disallow: /admin
+Disallow: /checkout
+Disallow: /booking/confirmation
+Disallow: /dashboard
+Disallow: /api/
+
+# Host & Sitemap specification
+Sitemap: https://dastan.pk/sitemap.xml

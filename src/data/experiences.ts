@@ -26,7 +26,7 @@ export const experiences: Experience[] = [
       'Recipe booklet and jar of stone-ground Swati mountain spice mix'
     ],
     maxGroupSize: 8,
-    image: '/src/assets/images/hero_swat_valley_1790930745484.jpg',
+    image: '/images/hero_swat_valley.webp',
     culturalInsight: 'In Pashtun tradition, food cooked with love for a guest carries the barakah (blessing) of the entire household.'
   },
   {
@@ -54,7 +54,7 @@ export const experiences: Experience[] = [
       'Contribution to Kalam Valley trail preservation'
     ],
     maxGroupSize: 10,
-    image: '/src/assets/images/dest_kalam_mountains_1790930758794.jpg',
+    image: '/images/dest_kalam_mountains.webp',
     culturalInsight: 'Local Kohistani communities treat the ancient deodar cedar ("Diyar") as a sacred guardian of mountain watersheds.'
   },
   {
@@ -82,7 +82,7 @@ export const experiences: Experience[] = [
       'Traditional warm shawl for the evening'
     ],
     maxGroupSize: 12,
-    image: '/src/assets/images/hero_swat_valley_1790930745484.jpg',
+    image: '/images/hero_swat_valley.webp',
     culturalInsight: 'A guest in a Pashtun Hujra is under the sacred protection of the host family from sunset to sunrise.'
   },
   {
@@ -110,7 +110,7 @@ export const experiences: Experience[] = [
       'Freshly roasted walnuts and apricot tea'
     ],
     maxGroupSize: 6,
-    image: '/src/assets/images/dest_chitral_culture_1790930771028.jpg',
+    image: '/images/dest_chitral_culture.webp',
     culturalInsight: 'Patti cloth has protected mountain herders and royalty for over 800 years and is completely natural and non-synthetic.'
   },
   {
@@ -138,7 +138,7 @@ export const experiences: Experience[] = [
       'Direct contribution to local smallholder farm'
     ],
     maxGroupSize: 10,
-    image: '/src/assets/images/hero_swat_valley_1790930745484.jpg',
+    image: '/images/hero_swat_valley.webp',
     culturalInsight: 'Miandam’s community orchards share irrigation water using ancient stone markers based on shadow lengths.'
   },
   {
@@ -166,7 +166,7 @@ export const experiences: Experience[] = [
       'Rooftop panorama tea overlooking Ladyfinger peak'
     ],
     maxGroupSize: 10,
-    image: '/src/assets/images/dest_hunza_passu_1790930782780.jpg',
+    image: '/images/dest_hunza_passu.webp',
     culturalInsight: 'Hunza has achieved over 95% literacy and pioneered women-led carpentry in mountain societies.'
   }
 ];

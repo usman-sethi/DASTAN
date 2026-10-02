@@ -32,7 +32,7 @@ export const Hero: React.FC<HeroProps> = ({ onStartJourney, onExploreDestination
       {/* Full Viewport Cinematic Background with slow Ken Burns effect */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <motion.img
-          src="/src/assets/images/hero_swat_valley_1790930745484.jpg"
+          src="/images/hero_swat_valley.webp"
           alt="Swat Valley Hindu Kush emerald river terraces, Khyber Pakhtunkhwa"
           className="w-full h-full object-cover object-center scale-105"
           initial={{ scale: 1.08 }}

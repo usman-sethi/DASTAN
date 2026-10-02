@@ -1,0 +1,16 @@
+{
+  "name": "DASTAN — Cultural Tourism & Verified Travel",
+  "short_name": "DASTAN",
+  "description": "DASTAN connects travelers with verified local stays, guides, transport and authentic cultural experiences across Pakistan. Every place has a story.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0C2B22",
+  "theme_color": "#0C2B22",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
